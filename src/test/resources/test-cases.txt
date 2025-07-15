@@ -1,0 +1,10 @@
+TestCase name: user can successfully log in
+Steps -> Input -> ExpectedResult
+GoToUrl -> http://zero.webappsecurity.com -> PageLoaded
+ClickOnSignIn -> . -> LoginPage opens
+Input valid username into "Login" field -> username -> username is entered and visible
+Input valid password into "Password" field -> password -> password is entered and covered in dots
+Click on "Sign in" button -> . -> user is logged in and redirected to HomePage
+
+
+
