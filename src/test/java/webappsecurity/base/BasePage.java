@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import webappsecurity.components.AccountBankMenu;
 import webappsecurity.components.Navbar;
 
 import java.time.Duration;
@@ -14,6 +15,7 @@ public class BasePage {
     protected Actions actions;
     protected String url;
     protected Navbar navbar;
+    protected AccountBankMenu bankMenu;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -22,6 +24,7 @@ public class BasePage {
         PageFactory.initElements(driver, this);
         url = "http://zero.webappsecurity.com";
         navbar = new Navbar(driver, wait, actions);
+        bankMenu = null;
     }
 
     public void navigateTo() {
@@ -30,6 +33,10 @@ public class BasePage {
     public String getCompleteUrl() {
         return url;
     }
-    public Navbar getNavbar() { return navbar; }
-
+    public Navbar getNavbar() {
+        return navbar;
+    }
+    public AccountBankMenu getBankMenu() {
+        return bankMenu;
+    }
 }

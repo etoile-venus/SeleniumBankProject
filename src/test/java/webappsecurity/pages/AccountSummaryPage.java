@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import webappsecurity.base.BasePage;
+import webappsecurity.components.AccountBankMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class AccountSummaryPage extends BasePage {
     public AccountSummaryPage(WebDriver driver) {
         super(driver);
         super.url = super.url + "/account-summary.html";
+        super.bankMenu = new AccountBankMenu(driver);
     }
 
     private final By row = By.cssSelector("tbody tr");

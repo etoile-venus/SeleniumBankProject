@@ -6,12 +6,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import webappsecurity.base.BasePage;
+import webappsecurity.components.AccountBankMenu;
 
 public class TransferFundsPage extends BasePage {
 
     public TransferFundsPage(WebDriver driver) {
         super(driver);
         super.url = super.url + "/bank/transfer-funds.html";
+        super.bankMenu = new AccountBankMenu(driver);
     }
 
     private final By fromAccount = By.id("tf_fromAccountId");
@@ -68,9 +70,36 @@ public class TransferFundsPage extends BasePage {
     public void clickSubmitButton() {
         getSubmitButton().click();
     }
+
     public String getMessageText() {
         return  getMessage().getText();
     }
+    public String getSelectedFromAccountName(String value) {
+        Select select = new Select(getFromAccount());
+        select.selectByValue(value);
+        WebElement option = select.getFirstSelectedOption();
+        return option.getText().split("\\(")[0].trim();
+    }
+    public String getSelectedToAccountName(String value) {
+        Select select = new Select(getToAccount());
+        select.selectByValue(value);
+        WebElement option = select.getFirstSelectedOption();
+        return option.getText().split("\\(")[0].trim();
+    }
+    public String getSelectedFromAccountBalance(String value) {
+        Select select = new Select(getFromAccount());
+        select.selectByValue(value);
+        WebElement option = select.getFirstSelectedOption();
+        return option.getText().split("\\$")[1].replaceAll("[ )]", "").trim();
+    }
+    public String getSelectedToAccountBalance(String value) {
+        Select select = new Select(getToAccount());
+        select.selectByValue(value);
+        WebElement option = select.getFirstSelectedOption();
+        return option.getText().split("\\$")[1].replaceAll("[ )]", "").trim();
+    }
+
+
     public void fillOutForm(String fromValue, String toValue, String amount, String description) {
         selectFromAccount(fromValue);
         selectToAccount(toValue);
