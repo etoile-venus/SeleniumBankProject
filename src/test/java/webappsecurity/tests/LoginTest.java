@@ -14,19 +14,20 @@ public class LoginTest extends BaseTest {
     @BeforeMethod
     public void methodSetup() {
         HomePage homePage = new HomePage(driver);
-        loginPage = homePage.clickOnSignInButton();
+        loginPage = homePage.getNavbar().clickOnSignInButton();
     }
 
     @DataProvider(name="user")
     public Object[][] getValidUser() {
-        return new Object[][] { {"username", "password"} };
+        return new Object[][] {
+                {"username", "password"},
+        };
     }
-
     @Test(priority=1, dataProvider = "user")
     public void userCanLogInWithValidCredentials(String username, String password) {
         HomePage homePage = loginPage.login(username, password);
         driver.navigate().back();
         Assert.assertEquals(driver.getCurrentUrl(), homePage.getCompleteUrl(), "URLs do not match!");
-        Assert.assertEquals(homePage.getUsername(), username, "Username from login doesn't match page on home page!");
+        Assert.assertEquals(homePage.getNavbar().getUserName(), username, "Username from login doesn't match page on home page!");
     }
 }

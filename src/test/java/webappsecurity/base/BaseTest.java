@@ -1,6 +1,7 @@
 package webappsecurity.base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,32 +14,12 @@ import java.util.Map;
 
 public class BaseTest {
     protected WebDriver driver;
+    protected Cookie jSessionId;
 
     @BeforeClass
     public void classSetup() {
-        WebDriverManager.chromedriver().setup();
-
-        ChromeOptions options = new ChromeOptions();
-        // Ključni argumenti koji gase password menadžer u Chrome-u
-        options.addArguments("--disable-save-password-bubble");
-        options.addArguments("--disable-autofill-keyboard-accessory-view");
-        options.addArguments("--disable-autofill-keyboard-accessory-view-password-suggestions");
-        options.addArguments("--disable-features=PasswordManager");
-        options.addArguments("--disable-password-manager-reauthentication");
-        options.addArguments("disable-blink-features=CredentialManagement");
-
-// Za bezbednosne sertifikate i lokalni razvoj
-        options.addArguments("--ignore-certificate-errors");
-        options.addArguments("--allow-insecure-localhost");
-        options.addArguments("--disable-web-security");
-
-// Isključivanje password managera preko profila (prefs)
-        Map<String, Object> prefs = new HashMap<>();
-        prefs.put("credentials_enable_service", false);
-        prefs.put("profile.password_manager_enabled", false);
-        options.setExperimentalOption("prefs", prefs);
-
-        driver = new ChromeDriver(options);
+        System.setProperty("webdriver.edge.driver", "C:\\Users\\DB-Laptop\\Downloads\\edgedriver_win64\\msedgedriver.exe");
+        driver = new EdgeDriver();
         driver.manage().window().maximize();
 
         driver.get((new BasePage(driver)).getCompleteUrl());

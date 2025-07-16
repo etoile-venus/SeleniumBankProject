@@ -1,6 +1,7 @@
 package webappsecurity.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import webappsecurity.base.BaseTest;
@@ -10,17 +11,29 @@ import webappsecurity.pages.LoginPage;
 public class HomeTest extends BaseTest {
     private HomePage homePage;
 
-    @BeforeMethod
-    public void methodSetup() {
+    @BeforeClass
+    public void cookiesSetup() {
         homePage = new HomePage(driver);
+        LoginPage loginPage = homePage.getNavbar().clickOnSignInButton();
+        loginPage.login("username", "password");
+        driver.navigate().back();
+        jSessionId = driver.manage().getCookieNamed("JSESSIONID");
     }
 
-    @Test(priority=1)
-    public void checkIfUserCanOpenLoginPage() {
-        LoginPage loginPage = homePage.clickOnSignInButton();
-        String currentUrl = driver.getCurrentUrl();
-        Assert.assertEquals(currentUrl, loginPage.getCompleteUrl(), "URLs do not match!");
+    @BeforeMethod
+    public void methodSetup() {
+        homePage.navigateTo();
+        driver.manage().deleteAllCookies();
+        driver.manage().addCookie(jSessionId);
+        driver.navigate().refresh();
     }
+
+    @Test
+    public void userCanStayLoggedInWithRememberedCookie() {
+        String actual = homePage.getNavbar().getUserName();
+        Assert.assertEquals(actual, "username");
+    }
+
 
 
 }
