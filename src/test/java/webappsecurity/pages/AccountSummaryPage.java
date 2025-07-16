@@ -14,7 +14,7 @@ public class AccountSummaryPage extends BasePage {
 
     public AccountSummaryPage(WebDriver driver) {
         super(driver);
-        super.url = super.url + "/account-summary.html";
+        super.url = super.url + "/bank/account-summary.html";
         super.bankMenu = new AccountBankMenu(driver);
     }
 

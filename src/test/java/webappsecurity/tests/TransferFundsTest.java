@@ -1,5 +1,6 @@
 package webappsecurity.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -47,13 +48,33 @@ public class TransferFundsTest extends BaseTest {
 
 
         String payment = String.valueOf(Math.abs(Double.parseDouble(toAccountBalance)));
-        System.out.println(payment);
         transferFundsPage.fillOutForm(fromAccount,toAccount,payment,description);
         transferFundsPage.clickContinueButton();
         transferFundsPage.clickSubmitButton();
-        System.out.println(transferFundsPage.getMessage().getText());
+        Assert.assertEquals(
+                transferFundsPage.getMessageText(),
+                "You successfully submitted your transaction.",
+                "Transfer was not successful."
+        );
 
         AccountSummaryPage summaryPage = transferFundsPage.getBankMenu().openAccountSummary();
-        boolean result = summaryPage.findAccountWithBalanceAmount(fromAccountName, fromAccountBalance-payment);
+        String fromAccountNewBalance = String.valueOf(Double.parseDouble(fromAccountBalance)-Double.parseDouble(payment));
+        String toAccountNewBalance = String.valueOf(Double.parseDouble(toAccountBalance) + Double.parseDouble(payment));
+        boolean resultCheckFromAccount = summaryPage.findAccountWithBalanceAmount(
+                fromAccountName,
+                fromAccountNewBalance
+        );
+        boolean resultCheckToAccount = summaryPage.findAccountWithBalanceAmount(
+                toAccountName,
+                toAccountNewBalance
+        );
+        Assert.assertTrue(
+                resultCheckFromAccount,
+                "Account balance for FROM account [" + fromAccountName + "] is not updated correctly in the summary page."
+        );
+        Assert.assertTrue(
+                resultCheckToAccount,
+                "Account balance for TO account [" + toAccountName + "] is not updated correctly in the summary page."
+        );
     }
 }
