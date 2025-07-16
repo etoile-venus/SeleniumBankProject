@@ -15,6 +15,11 @@ public class SearchPage extends BasePage {
         super.url = super.url + "/search.html?searchTerm=" + query;
     }
 
+    public void waitForPageToLoad() {
+        super.waitForPageToLoad(searchInput);
+    }
+
+    private final By searchInput = By.id("searchTerm");
     private final By container = By.className("top_offset");
     private final By result = By.cssSelector(".top_offset ul li a");
 

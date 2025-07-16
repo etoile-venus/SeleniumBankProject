@@ -13,6 +13,10 @@ public class LoginPage extends BasePage {
         super.url = super.url + "/login.html";
     }
 
+    public void waitForPageToLoad() {
+        super.waitForPageToLoad(signInButton);
+    }
+
     private final By inputUsername = By.id("user_login");
     private final By inputPassword = By.id("user_password");
     private final By signInButton = By.cssSelector("input[value='Sign in']");

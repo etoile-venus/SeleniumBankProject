@@ -15,6 +15,12 @@ public class HomePage extends BasePage {
         super.url = super.url + "/index.html";
     }
 
+    public void waitForPageToLoad() {
+        super.waitForPageToLoad(footer);
+    }
+
+    private final By footer = By.className("extra");
+
 
 
 

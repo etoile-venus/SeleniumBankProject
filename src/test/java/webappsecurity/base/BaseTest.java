@@ -21,14 +21,12 @@ public class BaseTest {
         System.setProperty("webdriver.edge.driver", "C:\\Users\\DB-Laptop\\Downloads\\edgedriver_win64\\msedgedriver.exe");
         driver = new EdgeDriver();
         driver.manage().window().maximize();
-
-        driver.get((new BasePage(driver)).getCompleteUrl());
     }
 
     @AfterClass
     public void tearDown() {
         if (driver != null) {
-            //driver.quit();
+            driver.quit();
         }
     }
 }

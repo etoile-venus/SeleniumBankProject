@@ -19,6 +19,7 @@ public class TransferFundsTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.navigateTo();
         loginPage.login("username", "password");
+
         transferFundsPage = new TransferFundsPage(driver);
         transferFundsPage.navigateTo();
         jSessionId = driver.manage().getCookieNamed("JSESSIONID");

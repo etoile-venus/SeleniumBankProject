@@ -14,6 +14,7 @@ public class LoginTest extends BaseTest {
     @BeforeMethod
     public void methodSetup() {
         HomePage homePage = new HomePage(driver);
+        homePage.navigateTo();
         loginPage = homePage.getNavbar().clickOnSignInButton();
     }
 
@@ -26,7 +27,7 @@ public class LoginTest extends BaseTest {
     @Test(priority=1, dataProvider = "user")
     public void userCanLogInWithValidCredentials(String username, String password) {
         HomePage homePage = loginPage.login(username, password);
-        driver.navigate().back();
+        homePage.navigateTo();
         Assert.assertEquals(driver.getCurrentUrl(), homePage.getCompleteUrl(), "URLs do not match!");
         Assert.assertEquals(homePage.getNavbar().getUserName(), username, "Username from login doesn't match page on home page!");
     }

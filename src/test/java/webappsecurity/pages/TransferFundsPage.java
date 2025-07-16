@@ -16,6 +16,10 @@ public class TransferFundsPage extends BasePage {
         super.bankMenu = new AccountBankMenu(driver);
     }
 
+    public void waitForPageToLoad() {
+        super.waitForPageToLoad(continueButton);
+    }
+
     private final By fromAccount = By.id("tf_fromAccountId");
     private final By toAccount = By.id("tf_toAccountId");
     private final By inputAmount = By.id("tf_amount");

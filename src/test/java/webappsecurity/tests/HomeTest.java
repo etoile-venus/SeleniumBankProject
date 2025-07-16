@@ -1,5 +1,7 @@
 package webappsecurity.tests;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -16,6 +18,7 @@ public class HomeTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.navigateTo();
         loginPage.login("username", "password");
+
         homePage = new HomePage(driver);
         homePage.navigateTo();
         jSessionId = driver.manage().getCookieNamed("JSESSIONID");
@@ -31,8 +34,20 @@ public class HomeTest extends BaseTest {
 
     @Test
     public void userCanStayLoggedInWithRememberedCookie() {
-        String actual = homePage.getNavbar().getUserName();
+        WebDriver tempDriver = new EdgeDriver();
+
+        HomePage tempHomePage = new HomePage(tempDriver);
+        tempHomePage.navigateTo();
+        tempHomePage.waitForPageToLoad();
+
+        tempDriver.manage().deleteAllCookies();
+        tempDriver.manage().addCookie(jSessionId);
+        tempDriver.navigate().refresh();
+
+        String actual = tempHomePage.getNavbar().getUserName();
         Assert.assertEquals(actual, "username");
+
+        tempDriver.quit();
     }
 
 

@@ -32,6 +32,8 @@ public class SearchTest extends BaseTest {
     @Test(dataProvider = "queryData")
     public void resultsContainSearchParams(String query) {
         searchPage.getNavbar().enterSearchText(query);
+        searchPage.waitForPageToLoad();
+
         List<WebElement> results = searchPage.getResults();
 
         SoftAssert softAssert = new SoftAssert();

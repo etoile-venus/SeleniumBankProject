@@ -18,6 +18,10 @@ public class AccountSummaryPage extends BasePage {
         super.bankMenu = new AccountBankMenu(driver);
     }
 
+    public void waitForPageToLoad() {
+        super.waitForPageToLoad(row);
+    }
+
     private final By row = By.cssSelector("tbody tr");
     private final By accountType = By.cssSelector("td:nth-child(1) a");
     private final By creditCardNumber = By.cssSelector("td:nth-child(2)");

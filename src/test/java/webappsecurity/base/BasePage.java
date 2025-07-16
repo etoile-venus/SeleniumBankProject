@@ -1,8 +1,10 @@
 package webappsecurity.base;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import webappsecurity.components.AccountBankMenu;
 import webappsecurity.components.Navbar;
@@ -27,8 +29,15 @@ public class BasePage {
         bankMenu = null;
     }
 
+    public void waitForPageToLoad() { }
+
+    public void waitForPageToLoad(By locator) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
     public void navigateTo() {
         driver.navigate().to(url);
+        waitForPageToLoad();
     }
     public String getCompleteUrl() {
         return url;
